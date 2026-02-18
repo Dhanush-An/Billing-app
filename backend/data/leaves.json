@@ -1,0 +1,13 @@
+[
+  {
+    "id": 1,
+    "employee_id": 1,
+    "leave_type": "Sick Leave",
+    "start_date": "2026-02-13",
+    "end_date": "2026-02-14",
+    "days": 1,
+    "reason": "Cold",
+    "status": "Approved",
+    "applied_on": "2026-02-13"
+  }
+]
