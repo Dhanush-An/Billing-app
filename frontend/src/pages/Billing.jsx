@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import {
   ShoppingCart, Search, Plus, X, FileText
 } from 'lucide-react';
-import { useAuth } from './AuthContext';
-import { useAppData } from '../../context/AppDataContext';
-import { PageLoader } from '../ui/LoadingSpinner';
+import { useAuth } from '../context/AuthContext';
+import { useAppData } from '../context/AppDataContext';
+import { PageLoader } from '../components/ui/LoadingSpinner';
 
 const EMPTY_ROW = (idx) => ({
   id: `empty-${idx}`,

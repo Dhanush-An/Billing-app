@@ -4,13 +4,13 @@ import {
   ShoppingCart, Package, LogOut, Plus, Search, Edit2, Trash2, X,
   FileText, ShoppingBag, CreditCard, Wallet, TrendingUp
 } from 'lucide-react';
-import { useAuth } from '../front-end/AuthContext';
-import { useAppData } from '../../context/AppDataContext';
-import { PageLoader } from '../ui/LoadingSpinner';
-import CreateNewItemModal from './CreateNewItemModal';
-import AddCustomerModal from './AddCustomerModal';
-import AddSupplierModal from './AddSupplierModal';
-import AddPurchaseModal from './AddPurchaseModal';
+import { useAuth } from '../context/AuthContext';
+import { useAppData } from '../context/AppDataContext';
+import { PageLoader } from '../components/ui/LoadingSpinner';
+import CreateNewItemModal from '../components/front-end/CreateNewItemModal';
+import AddCustomerModal from '../components/front-end/AddCustomerModal';
+import AddSupplierModal from '../components/front-end/AddSupplierModal';
+import AddPurchaseModal from '../components/front-end/AddPurchaseModal';
 
 
 

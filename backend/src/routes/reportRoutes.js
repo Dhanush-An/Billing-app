@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const reportController = require('../controllers/reportController');
-const { authMiddleware: protect } = require('../middleware/auth');
+const { authMiddleware: protect } = require('../middleware/authMiddleware');
 
 router.post('/', protect, reportController.createReport);
 router.get('/', protect, reportController.getAllReports);

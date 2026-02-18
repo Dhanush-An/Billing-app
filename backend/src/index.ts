@@ -14,13 +14,13 @@ console.log('__dirname:', __dirname);
 
 // Import routes using dynamic imports or type them as any for now since they are .js files
 // Setting them to 'any' to avoid "missing module" errors while they remain .js
-const authRoutes = require('./routes/auth');
-const employeeRoutes = require('./routes/employees');
-const attendanceRoutes = require('./routes/attendance');
-const leaveRoutes = require('./routes/leaves');
-const payrollRoutes = require('./routes/payroll');
-const announcementRoutes = require('./routes/announcements');
-const reportRoutes = require('./routes/reports');
+const authRoutes = require('./routes/authRoutes');
+const userRoutes = require('./routes/userRoutes');
+const attendanceRoutes = require('./routes/attendanceRoutes');
+const leaveRoutes = require('./routes/leaveRoutes');
+const billingRoutes = require('./routes/billingRoutes');
+const announcementRoutes = require('./routes/announcementRoutes');
+const reportRoutes = require('./routes/reportRoutes');
 
 const app = express();
 
@@ -44,13 +44,13 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 console.log('Registering routes...');
 app.use('/api/auth', authRoutes);
 console.log(' - /api/auth registered');
-app.use('/api/employees', employeeRoutes);
+app.use('/api/employees', userRoutes);
 console.log(' - /api/employees registered');
 app.use('/api/attendance', attendanceRoutes);
 console.log(' - /api/attendance registered');
 app.use('/api/leaves', leaveRoutes);
 console.log(' - /api/leaves registered');
-app.use('/api/payroll', payrollRoutes);
+app.use('/api/payroll', billingRoutes);
 console.log(' - /api/payroll registered');
 app.use('/api/announcements', announcementRoutes);
 console.log(' - /api/announcements registered');

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ShoppingCart, Eye, EyeOff } from 'lucide-react';
-import { useAuth } from './AuthContext';
+import { useAuth } from '../context/AuthContext';
 
 const DEFAULT_USERS = [
   { id: 1, username: 'admin', password: 'admin123', role: 'admin', name: 'Admin User' },

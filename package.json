@@ -1,0 +1,13 @@
+{
+  "name": "billing-app-root",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "scripts": {
+    "frontend": "npm start --workspace=frontend",
+    "backend": "npm start --workspace=backend"
+  }
+}

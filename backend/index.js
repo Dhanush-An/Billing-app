@@ -12,13 +12,13 @@ const path_1 = __importDefault(require("path"));
 dotenv_1.default.config();
 // Import routes using dynamic imports or type them as any for now since they are .js files
 // Setting them to 'any' to avoid "missing module" errors while they remain .js
-const authRoutes = require('../dist/routes/auth');
-const employeeRoutes = require('../dist/routes/employees');
-const attendanceRoutes = require('../dist/routes/attendance');
-const leaveRoutes = require('../dist/routes/leaves');
-const payrollRoutes = require('../dist/routes/payroll');
-const announcementRoutes = require('../dist/routes/announcements');
-const reportRoutes = require('../dist/routes/reports');
+const authRoutes = require('./dist/routes/auth');
+const employeeRoutes = require('./dist/routes/employees');
+const attendanceRoutes = require('./dist/routes/attendance');
+const leaveRoutes = require('./dist/routes/leaves');
+const payrollRoutes = require('./dist/routes/payroll');
+const announcementRoutes = require('./dist/routes/announcements');
+const reportRoutes = require('./dist/routes/reports');
 const app = (0, express_1.default)();
 // Middleware
 // Middleware
