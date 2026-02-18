@@ -26,7 +26,7 @@ exports.login = async (req, res) => {
             }
         }
 
-        const employees = await readData('employees.json');
+        const employees = await readData('users.json');
 
         // Find user by email or username first
         const user = employees.find(e =>
@@ -103,7 +103,7 @@ exports.register = async (req, res) => {
             return res.status(400).json({ message: 'All fields are required' });
         }
 
-        const employees = await readData('employees.json');
+        const employees = await readData('users.json');
 
         // Check if user already exists
         // Check if user already exists in employees
@@ -171,7 +171,7 @@ exports.getCurrentUser = async (req, res) => {
             return res.json({ email: 'admin@hrms.com', name: 'Admin', role: 'admin' });
         }
 
-        const employees = await readData('employees.json');
+        const employees = await readData('users.json');
         const user = employees.find(e => e.id === req.user.id);
 
         if (!user) {
@@ -201,7 +201,7 @@ exports.approveRegistration = async (req, res) => {
     try {
         const { id } = req.body;
         const pendingRegistrations = await readData('pending_registrations.json');
-        const employees = await readData('employees.json');
+        const employees = await readData('users.json');
 
         const index = pendingRegistrations.findIndex(e => e.id === id);
         if (index === -1) {
@@ -228,7 +228,7 @@ exports.approveRegistration = async (req, res) => {
         employees.push(newUser);
         pendingRegistrations.splice(index, 1);
 
-        await writeData('employees.json', employees);
+        await writeData('users.json', employees);
         await writeData('pending_registrations.json', pendingRegistrations);
 
         res.json({ message: 'Registration approved successfully', user: newUser });

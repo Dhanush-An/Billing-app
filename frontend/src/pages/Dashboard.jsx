@@ -19,7 +19,13 @@ const CHART_COLORS = ['#f59e0b', '#8b5cf6', '#ef4444', '#10b981', '#3b82f6', '#e
 const AdminDashboard = () => {
   const navigate = useNavigate();
   const { currentUser, logout } = useAuth();
-  const { products, setProducts, sales, customers, setCustomers, suppliers, setSuppliers, purchases, setPurchases, resetProducts } = useAppData();
+  const {
+    products, addProduct, updateProduct, deleteProduct,
+    sales,
+    customers, addCustomer, updateCustomer, deleteCustomer,
+    suppliers, addSupplier, updateSupplier, deleteSupplier,
+    purchases, setPurchases, resetProducts
+  } = useAppData();
   const [activeTab, setActiveTab] = useState('Dashboard');
   const [searchTerm, setSearchTerm] = useState('');
   const [stockSearchTerm, setStockSearchTerm] = useState('');
@@ -204,98 +210,96 @@ const AdminDashboard = () => {
   }, [sales, purchases, reportDate]);
 
   const handleSaveNewItem = useCallback(
-    (item) => {
-      setProducts((prev) => [
-        ...prev,
-        {
-          id: item.id,
-          name: item.name,
-          price: item.price,
-          stock: item.stock,
-          category: item.category,
-          product_code: item.product_code,
-          unit: item.unit || 'PCS',
-          discount: item.discount || 0,
-          gstRate: item.gstRate || 0,
-        },
-      ]);
-      setShowAddProduct(false);
+    async (item) => {
+      try {
+        await addProduct(item);
+        setShowAddProduct(false);
+      } catch (error) {
+        alert('Error adding product: ' + error.message);
+      }
     },
-    [setProducts]
+    [addProduct]
   );
 
-  const handleUpdateProduct = useCallback(() => {
+  const handleUpdateProduct = useCallback(async () => {
     if (!editingProduct) return;
-    setProducts((prev) =>
-      prev.map((p) => (p.id === editingProduct.id ? editingProduct : p))
-    );
-    setEditingProduct(null);
-  }, [editingProduct, setProducts]);
+    try {
+      await updateProduct(editingProduct.id, editingProduct);
+      setEditingProduct(null);
+    } catch (error) {
+      alert('Error updating product: ' + error.message);
+    }
+  }, [editingProduct, updateProduct]);
 
-  const handleUpdateCustomer = useCallback(() => {
+  const handleUpdateCustomer = useCallback(async () => {
     if (!editingCustomer) return;
-    setCustomers((prev) =>
-      prev.map((c) => (c.id === editingCustomer.id ? editingCustomer : c))
-    );
-    setEditingCustomer(null);
-  }, [editingCustomer, setCustomers]);
+    try {
+      await updateCustomer(editingCustomer.id, editingCustomer);
+      setEditingCustomer(null);
+    } catch (error) {
+      alert('Error updating customer: ' + error.message);
+    }
+  }, [editingCustomer, updateCustomer]);
 
   const handleSaveNewCustomer = useCallback(
-    (customer) => {
-      setCustomers((prev) => [
-        ...prev,
-        {
-          ...customer,
-          id: Date.now(),
-          customerId: prev.length > 0 ? Math.max(...prev.map(c => c.customerId || 0)) + 1 : 1,
-          purchases: 0
-        },
-      ]);
-      setShowAddCustomer(false);
+    async (customer) => {
+      try {
+        await addCustomer(customer);
+        setShowAddCustomer(false);
+      } catch (error) {
+        alert('Error adding customer: ' + error.message);
+      }
     },
-    [setCustomers]
+    [addCustomer]
   );
 
   const handleDeleteCustomer = useCallback(
-    (id) => {
+    async (id) => {
       if (window.confirm('Are you sure you want to delete this customer?')) {
-        setCustomers((prev) => prev.filter((c) => c.id !== id));
+        try {
+          await deleteCustomer(id);
+        } catch (error) {
+          alert('Error deleting customer: ' + error.message);
+        }
       }
     },
-    [setCustomers]
+    [deleteCustomer]
   );
 
   const handleDeleteProduct = useCallback(
-    (id) => {
+    async (id) => {
       if (window.confirm('Are you sure you want to delete this product?')) {
-        setProducts((prev) => prev.filter((p) => p.id !== id));
+        try {
+          await deleteProduct(id);
+        } catch (error) {
+          alert('Error deleting product: ' + error.message);
+        }
       }
     },
-    [setProducts]
+    [deleteProduct]
   );
 
   const handleSaveNewSupplier = useCallback(
-    (supplier) => {
-      setSuppliers((prev) => [
-        ...prev,
-        {
-          ...supplier,
-          id: Date.now(),
-          products: 0
-        },
-      ]);
-      setShowAddSupplier(false);
+    async (supplier) => {
+      try {
+        await addSupplier(supplier);
+        setShowAddSupplier(false);
+      } catch (error) {
+        alert('Error adding supplier: ' + error.message);
+      }
     },
-    [setSuppliers]
+    [addSupplier]
   );
 
-  const handleUpdateSupplier = useCallback(() => {
+  const handleUpdateSupplier = useCallback(async () => {
     if (!editingSupplier) return;
-    setSuppliers((prev) =>
-      prev.map((s) => (s.id === editingSupplier.id ? editingSupplier : s))
-    );
-    setEditingSupplier(null);
-  }, [editingSupplier, setSuppliers]);
+    try {
+      await updateSupplier(editingSupplier.id, editingSupplier);
+      setEditingSupplier(null);
+    } catch (error) {
+      alert('Error updating supplier: ' + error.message);
+    }
+  }, [editingSupplier, updateSupplier]);
 
   const handleSaveNewPurchase = useCallback(
     (purchase) => {
@@ -322,12 +326,16 @@ const AdminDashboard = () => {
   );
 
   const handleDeleteSupplier = useCallback(
-    (id) => {
+    async (id) => {
       if (window.confirm('Are you sure you want to delete this supplier?')) {
-        setSuppliers((prev) => prev.filter((s) => s.id !== id));
+        try {
+          await deleteSupplier(id);
+        } catch (error) {
+          alert('Error deleting supplier: ' + error.message);
+        }
       }
     },
-    [setSuppliers]
+    [deleteSupplier]
   );
 
   const handleLogout = useCallback(() => {

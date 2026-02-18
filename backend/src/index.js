@@ -8,12 +8,9 @@ dotenv.config();
 
 // Import routes
 const authRoutes = require('./routes/authRoutes');
-const userRoutes = require('./routes/userRoutes');
-const attendanceRoutes = require('./routes/attendanceRoutes');
-const leaveRoutes = require('./routes/leaveRoutes');
-const billingRoutes = require('./routes/billingRoutes');
-const announcementRoutes = require('./routes/announcementRoutes');
-const reportRoutes = require('./routes/reportRoutes');
+const productRoutes = require('./routes/productRoutes');
+const saleRoutes = require('./routes/saleRoutes');
+const customerRoutes = require('./routes/customerRoutes');
 
 const app = express();
 
@@ -34,16 +31,13 @@ app.use((req, res, next) => {
 
 // Routes
 app.use('/api/auth', authRoutes);
-app.use('/api/employees', userRoutes);
-app.use('/api/attendance', attendanceRoutes);
-app.use('/api/leaves', leaveRoutes);
-app.use('/api/payroll', billingRoutes);
-app.use('/api/announcements', announcementRoutes);
-app.use('/api/reports', reportRoutes);
+app.use('/api/products', productRoutes);
+app.use('/api/sales', saleRoutes);
+app.use('/api/entities', customerRoutes);
 
 // Health Check / Root Handler
 app.get('/', (req, res) => {
-    res.send('HRMS Backend is running successfully!');
+    res.send('Billing Software Backend is running successfully!');
 });
 
 // Serve frontend in development if needed

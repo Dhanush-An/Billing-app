@@ -1,12 +1,12 @@
 {
-  "name": "hrms-backend",
+  "name": "billing-backend",
   "version": "1.0.0",
-  "description": "",
-  "main": "dist/index.js",
+  "description": "Backend for Billing Software",
+  "main": "src/index.js",
   "scripts": {
-    "build": "tsc",
+    "build": "echo 'No build required for JS version'",
     "start": "node src/index.js",
-    "dev": "nodemon src/index.ts"
+    "dev": "nodemon src/index.js"
   },
   "keywords": [],
   "author": "",

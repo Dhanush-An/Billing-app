@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "name": "Dhanush",
+    "email": "dhanush.antigraviity@gmail.com",
+    "phone": "6379068721",
+    "role": "admin",
+    "status": "Active",
+    "avatar": "D",
+    "password_hash": "$2b$10$YkPtC9DD6DEQJv3UGdgCmx.H6V3T4VGe"
+  },
+  {
+    "id": 2,
+    "name": "Agila",
+    "email": "agila.antigraviity@gmail.com",
+    "phone": "6789908967",
+    "role": "user",
+    "status": "Active",
+    "avatar": "A",
+    "password_hash": "$2b$10$6DSqC2/yfdnO3kmzpQZyneTQ7Ty9ZnPnUuNs.GpetWx68p7DA1sWq"
+  }
+]

@@ -23,7 +23,7 @@ const EMPTY_ROW = (idx) => ({
 const UserDashboard = () => {
   const navigate = useNavigate();
   const { currentUser, logout } = useAuth();
-  const { products, setProducts, addSale, nextInvoiceNumber, setNextInvoiceNumber, customers } = useAppData();
+  const { products, setProducts, addSale, nextInvoiceNumber, setNextInvoiceNumber, customers, refreshData } = useAppData();
   const [billDate, setBillDate] = useState(() => new Date().toISOString().split('T')[0]);
   const [dueDate, setDueDate] = useState(() => new Date().toISOString().split('T')[0]);
   const [selectedAccount, setSelectedAccount] = useState({ id: 'choose', name: 'Please Choose', customerId: '' });
@@ -202,7 +202,7 @@ const UserDashboard = () => {
     setReceivedAmount(totals.netAmount);
   }, [totals.netAmount]);
 
-  const handleSave = useCallback((showInvoice = true) => {
+  const handleSave = useCallback(async (showInvoice = true) => {
     const nonEmptyItems = cartItems.filter((item) => !item.isEmpty);
     if (nonEmptyItems.length === 0) {
       alert('Please add at least one item');
@@ -215,7 +215,7 @@ const UserDashboard = () => {
 
     const currentInvoiceNo = `INV-${String(nextInvoiceNumber).padStart(3, '0')}`;
 
-    const sale = {
+    const newSale = {
       id: Date.now(),
       invoiceNo: currentInvoiceNo,
       date: new Date().toISOString(),
@@ -240,25 +240,34 @@ const UserDashboard = () => {
       paymentMode,
       additionalInfo: {},
     };
-    setProducts((prev) =>
-      prev.map((p) => {
-        const sold = nonEmptyItems.find((item) => item.id === p.id);
-        return sold ? { ...p, stock: p.stock - parseFloat(sold.qty) } : p;
-      })
-    );
-    addSale(sale);
-    setNextInvoiceNumber(prev => prev + 1);
-    localStorage.setItem('lastInvoice', JSON.stringify(sale));
 
-    if (showInvoice === 'thermal') {
-      navigate('/thermal-receipt', { state: { invoiceData: sale } });
-    } else if (showInvoice) {
-      navigate('/invoice', { state: { invoiceData: sale } });
-    } else {
-      alert(`Sale saved successfully! (Bill No: ${currentInvoiceNo})`);
-      clearForm();
+    try {
+      await addSale(newSale); // Use await for addSale
+      setNextInvoiceNumber(prev => prev + 1);
+      localStorage.setItem('lastInvoice', JSON.stringify(newSale));
+
+      // Update product stock
+      setProducts((prev) =>
+        prev.map((p) => {
+          const sold = nonEmptyItems.find((item) => item.id === p.id);
+          return sold ? { ...p, stock: p.stock - parseFloat(sold.qty) } : p;
+        })
+      );
+      refreshData(); // Refresh data after sale
+
+      if (showInvoice === 'thermal') {
+        navigate('/thermal-receipt', { state: { invoiceData: newSale } });
+      } else if (showInvoice) {
+        navigate('/invoice', { state: { invoiceData: newSale } });
+      } else {
+        alert(`Sale saved successfully! (Bill No: ${currentInvoiceNo})`);
+        clearForm();
+      }
+    } catch (error) {
+      console.error('Sale error:', error);
+      alert('Error recording sale: ' + error.message);
     }
-  }, [cartItems, selectedAccount, billDate, dueDate, currentUser, totals, setProducts, addSale, navigate, clearForm, paymentMode, nextInvoiceNumber, setNextInvoiceNumber]);
+  }, [cartItems, selectedAccount, billDate, dueDate, currentUser, totals, setProducts, addSale, navigate, clearForm, paymentMode, nextInvoiceNumber, setNextInvoiceNumber, receivedAmount, refreshData]);
 
   const handleLogout = useCallback(() => {
     logout();
