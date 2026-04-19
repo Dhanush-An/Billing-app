@@ -1,6 +1,8 @@
 {
   "name": "billing-app-root",
   "version": "1.0.0",
+  "description": "A professional Billing and Invoice Management Software.",
+  "author": "Dhanush-An",
   "private": true,
   "workspaces": [
     "frontend",
@@ -13,6 +15,7 @@
     "dev": "npm run dev --workspace=frontend & npm run dev --workspace=backend",
     "build": "npm run build --workspace=frontend",
     "start": "electron .",
+    "dev:desktop": "concurrently \"npm run dev --workspace=frontend\" \"npm run dev --workspace=backend\" \"wait-on http://localhost:5173 && cross-env NODE_ENV=development electron .\"",
     "dist": "electron-builder"
   },
   "build": {
@@ -33,7 +36,9 @@
     }
   },
   "devDependencies": {
+    "concurrently": "^9.2.1",
     "electron": "^41.2.1",
-    "electron-builder": "^26.8.1"
+    "electron-builder": "^26.8.1",
+    "wait-on": "^9.0.5"
   }
 }

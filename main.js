@@ -13,11 +13,18 @@ function createWindow() {
     }
   });
 
-  // Load the built frontend index.html
-  win.loadFile(path.join(__dirname, 'frontend/dist/index.html'));
+  // In development, load from the dev server. In production, load the local file.
+  const devUrl = 'http://localhost:5173'; // Default Vite port
+  if (process.env.NODE_ENV === 'development') {
+    win.loadURL(devUrl);
+  } else {
+    win.loadFile(path.join(__dirname, 'frontend/dist/index.html'));
+  }
 
-  // Open DevTools during development (optional)
-  // win.webContents.openDevTools();
+  // Open DevTools during development
+  if (process.env.NODE_ENV === 'development') {
+    win.webContents.openDevTools();
+  }
 }
 
 app.whenReady().then(() => {
