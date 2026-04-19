@@ -11,6 +11,7 @@
     "frontend": "npm start --workspace=frontend",
     "backend": "npm run dev --workspace=backend",
     "dev": "npm run dev --workspace=frontend & npm run dev --workspace=backend",
+    "build": "npm run build --workspace=frontend",
     "start": "electron .",
     "dist": "electron-builder"
   },
