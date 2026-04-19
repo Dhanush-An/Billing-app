@@ -226,6 +226,7 @@ const UserDashboard = () => {
       customerEmail: selectedAccount.email,
       cashier: currentUser?.name ?? 'Cashier',
       items: nonEmptyItems.map((item) => ({
+        id: item.id,
         code: item.code,
         name: item.itemName,
         unit: item.unit,

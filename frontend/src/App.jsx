@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { HashRouter as Router } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { AppDataProvider } from './context/AppDataContext';
 import { PageLoader } from './components/ui/LoadingSpinner';

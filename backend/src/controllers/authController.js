@@ -15,14 +15,14 @@ exports.login = async (req, res) => {
 
         // Admin login
         if (role === 'admin') {
-            // Check hardcoded admin first
+            // Personalized admin check (optional now that we have users.json, but kept for safety/backward compat)
             if ((email === 'admin@hrms.com' || email === 'admin') && password === 'admin123') {
                 const token = jwt.sign(
                     { id: 0, email, role: 'admin' },
                     process.env.JWT_SECRET,
                     { expiresIn: '24h' }
                 );
-                return res.json({ token, role: 'admin', user: { email, name: 'Admin' } });
+                return res.json({ token, role: 'admin', user: { email, name: 'System Admin', id: 0 } });
             }
         }
 
@@ -167,8 +167,8 @@ exports.register = async (req, res) => {
 // Get current user
 exports.getCurrentUser = async (req, res) => {
     try {
-        if (req.user.role === 'admin') {
-            return res.json({ email: 'admin@hrms.com', name: 'Admin', role: 'admin' });
+        if (req.user.id === 0) {
+            return res.json({ email: 'admin@hrms.com', name: 'System Admin', role: 'admin', id: 0 });
         }
 
         const employees = await readData('users.json');

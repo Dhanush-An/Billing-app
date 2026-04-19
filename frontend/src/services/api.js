@@ -1,4 +1,6 @@
-const API_BASE_URL = '/api';
+const API_BASE_URL = window.location.protocol === 'file:' 
+    ? 'http://localhost:5000/api' 
+    : '/api';
 
 const getAuthHeader = () => {
     const user = JSON.parse(localStorage.getItem('currentUser') || 'null');

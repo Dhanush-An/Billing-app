@@ -6,9 +6,33 @@
     "frontend",
     "backend"
   ],
+  "main": "main.js",
   "scripts": {
     "frontend": "npm start --workspace=frontend",
     "backend": "npm run dev --workspace=backend",
-    "dev": "npm run dev --workspace=frontend & npm run dev --workspace=backend"
+    "dev": "npm run dev --workspace=frontend & npm run dev --workspace=backend",
+    "start": "electron .",
+    "dist": "electron-builder"
+  },
+  "build": {
+    "appId": "com.billingapp.desktop",
+    "productName": "BillingApp",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "frontend/dist/**/*",
+      "main.js",
+      "preload.js",
+      "package.json"
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "assets/icon.png"
+    }
+  },
+  "devDependencies": {
+    "electron": "^41.2.1",
+    "electron-builder": "^26.8.1"
   }
 }
